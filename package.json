@@ -1,0 +1,19 @@
+{
+  "name": "autofiller",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Quentin Balin",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^26.0.1",
+    "jest-puppeteer": "^4.4.0",
+    "puppeteer": "^4.0.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "debug": "node --inspect-brk node_modules/.bin/jest --runInBand"
+  },
+  "jest": {
+    "preset": "jest-puppeteer"
+  }
+}

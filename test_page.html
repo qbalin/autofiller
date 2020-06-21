@@ -1,0 +1,106 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <div id="labels">
+    <!-- Label linked by id -->
+    <label for="text1Input">noise text1 noise</label>
+    <span> 
+      <input id="text1Input"/>
+    </span>
+
+    <!-- Label linked by nesting -->
+    <label>
+      noise text2 noise
+      <span>
+        <input id="text2Input" />
+      </span>
+    </label>
+
+    <!-- Label linked by proximity (non standard HTML) -->
+    <div>
+      <label>noise text3 noise</label>
+      <span>
+        <input id="text3Input" />
+      </span>
+    </div>
+  </div>
+
+
+  <div id="buttons">
+    <button id="text4Button">
+      Let us nest the text
+      <span>
+        deep
+        <div>
+          noise text4 noise
+        </div>
+      </span>
+    </button>
+
+    <input type="submit" value="text5" id="text5Button" />
+
+    <input type="button" value="text6" id="text6Button" />
+  </div>
+
+  <div id="links">
+    <a id="text7Link" href="#">
+      Some noise
+      <span>
+        noise text7 noise
+      </span>
+    </a>
+  </div>
+
+  <input id="text8Input" placeholder="text8" />
+
+  <input id="text9Input" name="text9" />
+
+  <input id="text10Input" />
+
+
+  <div id="accuracy">
+    <label for="text11Input">Here it is: QueryText that matches but is longer</label>
+    <input id="text11Input"/> 
+
+    <label for="text12Input">some QueryText</label>
+    <input id="text12Input"/>
+
+    <label for="text13Input">QueryText that matches but is longer</label>
+    <input id="text13Input"/>
+  </div>
+
+
+  <div id="results"></div>
+
+  <script src="./autofill.js"></script>
+  <script>
+    function onClick(evt) {
+      document.querySelector('#results').innerText = `${evt.target.id} clicked`;
+    }
+
+    function onChange(evt) {
+      document.querySelector('#results').innerText = `${evt.target.id}: ${evt.target.value}`;
+    }
+
+    document.querySelectorAll('input').forEach(i => {
+      i.addEventListener('change', onChange);
+      i.addEventListener('click', onClick);
+    });
+
+    document.querySelectorAll('button').forEach(i => {
+      i.addEventListener('click', onClick);
+    });
+
+    document.querySelectorAll('a').forEach(i => {
+      i.addEventListener('click', onClick);
+    });
+  </script>
+</body>
+
+</html>
