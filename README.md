@@ -2,7 +2,6 @@
 
 Simple utility designed to easily create autofiller bookmarklets. 
 
-
 ## Use case and example
 
 When going to read the newpaper online, I often find that the site disconnected me. I have to click on "Connection", wait fot the popup to show up, fill my username and password, and then click "login". It's easy, but tedious and I'm lazy. 
@@ -43,6 +42,8 @@ Hopefully, `findInputByText` can find what you want. It will look for an input t
 - by placeholder (exact text, no partial match)
 - by name (exact)
 - by id (exact)
+
+If you want more granularity, consider extending `findInputByText` to keep the API simple, or use the building blocks of `findInputByText` directly.
 
 These are ordered by preference: hopefully we should not need to look at `name` and `id`, but the Web is hard, so these are useful escape hatches.
 
