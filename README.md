@@ -11,7 +11,7 @@ Instead, I'd like to press a single bookmark button, on any site, and it will fu
 ```javascript
 doOnPage('myFavoriteNewspaper.fr', async () => {
   findInputByText('Connection').click();
-  wait(1000);
+  await wait(1000);
   findInputByText('username').setValue('my username');
   findInputByText('password').setValue('secret');
   findInputByText('login').click();
