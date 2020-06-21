@@ -9,7 +9,7 @@ When going to read the newspaper online, I often find that the site disconnected
 Instead, I'd like to press a single bookmark button, on any site, and it will fulfill these tasks for me. The API should be as simple as:
 
 ```javascript
-doOnPage('myFavortiteNewspaper.fr', async () => {
+doOnPage('myFavoriteNewspaper.fr', async () => {
   findInputByText('Connection').click();
   wait(1000);
   findInputByText('username').setValue('my username');
