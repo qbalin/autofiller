@@ -34,15 +34,12 @@ const findElementByText = (text, elementType) => {
   }, possibleNodes[0]);
 };
 
-const findInputByLabel = labelText => {
-  const labelNode = findElementByText(labelText, 'label');
-
-  /* If we can't find anything, return a dummy object */
+const findInputForLabel = labelNode => {
   if (!labelNode) {
     return null;
   }
 
-  /* 3. We found a label, great. Now let's find the associated input, there are 2 official methods: https://www.w3schools.com/tags/tag_label.asp
+  /* We found a label, great. Now let's find the associated input, there are 2 official methods: https://www.w3schools.com/tags/tag_label.asp
   i:   <label for='inputWithThisId'>labelText</label><input id='inputWithThisId'/>
   ii:  <label>labelText <input/></label>
 
@@ -104,33 +101,46 @@ const wrapInputOrNull = (inputOrNull, text) => {
   }
 };
 
-const findBtnByText = text => {
-  return (
-    findElementByText(text, 'button') ||
-    document.querySelector(`input[type="submit"][value="${CSS.escape(text)}"]`) ||
-    document.querySelector(`input[type="button"][value="${CSS.escape(text)}"]`)
-  );
+const matchedText = (elt, text) => {
+  switch (elt.tagName) {
+    case 'LABEL':
+    case 'BUTTON':
+    case 'A':
+      return elt.innerText;
+    default:
+      return text;
+  }
 };
 
 const findInputByText = text => {
   /* In order of preference */
-  const candidates = [
-    findInputByLabel(text),
-    findBtnByText(text),
+  const candidatesAndMatchedText = [
+    findElementByText(text, 'label'),
+
+    findElementByText(text, 'button'),
+    document.querySelector(`input[type="submit"][value="${CSS.escape(text)}"]`),
+    document.querySelector(`input[type="button"][value="${CSS.escape(text)}"]`),
+
     findElementByText(text, 'a'),
+
     document.querySelector(`input[placeholder="${CSS.escape(text)}"]`),
     document.querySelector(`input[name=${CSS.escape(text)}]`),
     document.querySelector(`#${CSS.escape(text)}`),
-  ].filter(c => c);
+  ]
+    .filter(c => c)
+    .map(element => ({ element, matchedText: matchedText(element, text) }));
 
-  const input = candidates.reduce(
+  const { element } = candidatesAndMatchedText.reduce(
     (memo, value) =>
-      Math.abs(memo.innerText.length - text.length) <=
-      Math.abs(value.innerText.length - text.length)
+      Math.abs(memo.matchedText.length - text.length) <=
+      Math.abs(value.matchedText.length - text.length)
         ? memo
         : value,
-    candidates[0],
+    candidatesAndMatchedText[0],
   );
+
+  const input = element.tagName === 'LABEL' ? findInputForLabel(element) : element;
+
   return wrapInputOrNull(input);
 };
 
