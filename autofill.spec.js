@@ -133,11 +133,9 @@ describe('findInputByText', () => {
       const input = findInputByText('QueryText');
       input.click();
       const res = [document.querySelector('#results').innerText];
-      input.setValue('changed to text12');
-      res.push(document.querySelector('#results').innerText);
       return res;
     });
-    expect(res).toEqual(['text12Input clicked', 'text12Input: changed to text12']);
+    expect(res).toEqual(['text12Input clicked']);
   });
 });
 
