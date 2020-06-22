@@ -16,6 +16,17 @@ beforeAll(async () => {
 });
 
 describe('findInputByText', () => {
+  it('returns an object implementing click and setValue when nothing is found', async () => {
+    const res = await page.evaluate(() => {
+      const input = findInputByText('something impossible to find');
+      input.click();
+      const res = [document.querySelector('#results').innerText];
+      input.setValue('something');
+      res.push(document.querySelector('#results').innerText);
+      return res;
+    });
+  });
+
   it('retrieves an id linked input by label text', async () => {
     const res = await page.evaluate(() => {
       const input = findInputByText('text1');
@@ -136,6 +147,66 @@ describe('findInputByText', () => {
       return res;
     });
     expect(res).toEqual(['text12Input clicked']);
+  });
+
+  it('prefers labels to buttons', async () => {
+    const res = await page.evaluate(() => {
+      const input = findInputByText('text14');
+      input.click();
+      const res = [document.querySelector('#results').innerText];
+      return res;
+    });
+    expect(res).toEqual(['text14Input clicked']);
+  });
+
+  it('prefers buttons to submit inputs', async () => {
+    const res = await page.evaluate(() => {
+      const input = findInputByText('text15');
+      input.click();
+      const res = [document.querySelector('#results').innerText];
+      return res;
+    });
+    expect(res).toEqual(['text15Button clicked']);
+  });
+
+  it('prefers submit inputs to links', async () => {
+    const res = await page.evaluate(() => {
+      const input = findInputByText('text16');
+      input.click();
+      const res = [document.querySelector('#results').innerText];
+      return res;
+    });
+    expect(res).toEqual(['text16Input clicked']);
+  });
+
+  it('prefers links to placeholders', async () => {
+    const res = await page.evaluate(() => {
+      const input = findInputByText('text17');
+      input.click();
+      const res = [document.querySelector('#results').innerText];
+      return res;
+    });
+    expect(res).toEqual(['text17Link clicked']);
+  });
+
+  it('prefers placeholders to names', async () => {
+    const res = await page.evaluate(() => {
+      const input = findInputByText('text18');
+      input.click();
+      const res = [document.querySelector('#results').innerText];
+      return res;
+    });
+    expect(res).toEqual(['text18InputPlaceholder clicked']);
+  });
+
+  it('prefers names to ids', async () => {
+    const res = await page.evaluate(() => {
+      const input = findInputByText('text19');
+      input.click();
+      const res = [document.querySelector('#results').innerText];
+      return res;
+    });
+    expect(res).toEqual(['text19InputName clicked']);
   });
 });
 

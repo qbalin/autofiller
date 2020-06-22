@@ -24,9 +24,7 @@ const findElementByText = (text, elementType) => {
   for (let i = 0; i < results.snapshotLength; i++) {
     possibleNodes.push(results.snapshotItem(i));
   }
-  debugger;
   return possibleNodes.reduce((memo, value) => {
-    console.log(memo);
     return Math.abs(memo.innerText.length - text.length) <=
       Math.abs(value.innerText.length - text.length)
       ? memo
@@ -130,7 +128,7 @@ const findInputByText = text => {
     .filter(c => c)
     .map(element => ({ element, matchedText: matchedText(element, text) }));
 
-  const { element } = candidatesAndMatchedText.reduce(
+  const bestMatch = candidatesAndMatchedText.reduce(
     (memo, value) =>
       Math.abs(memo.matchedText.length - text.length) <=
       Math.abs(value.matchedText.length - text.length)
@@ -139,7 +137,7 @@ const findInputByText = text => {
     candidatesAndMatchedText[0],
   );
 
-  const input = element.tagName === 'LABEL' ? findInputForLabel(element) : element;
+  const input = bestMatch && (bestMatch.element.tagName === 'LABEL' ? findInputForLabel(bestMatch.element) : bestMatch.element);
 
   return wrapInputOrNull(input);
 };
