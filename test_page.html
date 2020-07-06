@@ -7,109 +7,7 @@
 </head>
 
 <body>
-  <div id="labels">
-    <!-- Label linked by id -->
-    <label for="text1Input">text1</label>
-    <span> 
-      <input id="text1Input"/>
-    </span>
-
-    <!-- Label linked by nesting -->
-    <label>
-      noise text2 noise
-      <span>
-        <input id="text2Input" />
-      </span>
-    </label>
-
-    <!-- Label linked by proximity (non standard HTML) -->
-    <div>
-      <label>noise text3 noise</label>
-      <span>
-        <input id="text3Input" />
-      </span>
-    </div>
-  </div>
-
-
-  <div id="buttons">
-    <button id="text4Button">
-      Let us nest the text
-      <span>
-        deep
-        <div>
-          noise text4 noise
-        </div>
-      </span>
-    </button>
-
-    <input type="submit" value="text5" id="text5Button" />
-
-    <input type="button" value="text6" id="text6Button" />
-  </div>
-
-  <div id="links">
-    <a id="text7Link" href="#">
-      Some noise
-      <span>
-        noise text7 noise
-      </span>
-    </a>
-  </div>
-
-  <input id="text8Input" placeholder="text8" />
-
-  <input id="text9Input" name="text9" />
-
-  <input id="text10Input" />
-
-
-  <div id="accuracy">
-    <label for="text11Input">Here it is: QueryText that matches but is longer</label>
-    <input id="text11Input"/> 
-
-    <label for="text12Input">QueryText</label>
-    <input id="text12Input"/>
-
-    <a id="text13Link" href="#">long QueryText</a>
-  </div>
-
-  <div id="preference">
-    <div id="label_over_button">
-      <label for="text14Input">text14</label>
-      <input id="text14Input"/>
-
-      <button id="text14Button">text14</button>
-    </div>
-
-    <div id="button_over_submit_input">
-      <button id="text15Button">text15</button>
-
-      <input type="submit" value="text15" id="text15Input" />
-    </div>
-
-    <div id="submit_input_over_link">
-      <input type="submit" value="text16" id="text16Input" />
-      <a id="text16Link" href="#">text16</a>
-    </div>
-
-    <div id="link_over_placeholder">
-      <a id="text17Link" href="#">text17</a>
-      <input id="text17Input" placeholder="text17"/>
-    </div>
-
-    <div id="placeholder_over_name">
-      <input id="text18InputPlaceholder" placeholder="text18"/>
-      <input id="text18InputName" name="text18"/>
-    </div>
-
-    <div id="name_over_id">
-      <input id="text19InputName" name="text19"/>
-      <input id="text19"/>
-    </div>
-  </div>
-
-
+  <div id="code-under-test"></div>
   <div id="results"></div>
 
   <script src="./autofill.js"></script>
@@ -122,18 +20,23 @@
       document.querySelector('#results').innerText = `${evt.target.id}: ${evt.target.value}`;
     }
 
-    document.querySelectorAll('input').forEach(i => {
-      i.addEventListener('change', onChange);
-      i.addEventListener('click', onClick);
-    });
+    function setupPage(codeUnderTest) {
+      document.querySelector('#code-under-test').innerHTML = codeUnderTest;
 
-    document.querySelectorAll('button').forEach(i => {
-      i.addEventListener('click', onClick);
-    });
+      document.querySelectorAll('input').forEach(i => {
+        i.addEventListener('change', onChange);
+        i.addEventListener('click', onClick);
+      });
 
-    document.querySelectorAll('a').forEach(i => {
-      i.addEventListener('click', onClick);
-    });
+      document.querySelectorAll('button').forEach(i => {
+        i.addEventListener('click', onClick);
+      });
+
+      document.querySelectorAll('a').forEach(i => {
+        i.addEventListener('click', onClick);
+      });
+    }
+
   </script>
 </body>
 
